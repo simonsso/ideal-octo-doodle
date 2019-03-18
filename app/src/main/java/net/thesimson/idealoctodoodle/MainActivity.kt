@@ -3,7 +3,7 @@ package net.thesimson.idealoctodoodle
 import android.graphics.Typeface
 import android.os.Bundle
 import android.preference.PreferenceManager
-// import android.support.design.widget.BottomNavigationView
+import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.BottomNavigationView.OnNavigationItemSelectedListener
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -11,7 +11,7 @@ import org.osmdroid.config.Configuration
 import org.osmdroid.util.GeoPoint
 
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
-// import org.osmdroid.views.MapView
+import org.osmdroid.views.MapView
 
 class MainActivity : AppCompatActivity() {
 
@@ -53,8 +53,8 @@ class MainActivity : AppCompatActivity() {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
         worldmap.setTileSource(TileSourceFactory.MAPNIK);
-        worldmap.setBuiltInZoomControls(true)
         worldmap.setMultiTouchControls(true)
+        worldmap.setBuiltInZoomControls(true)
 
         worldmap.controller.setCenter(GeoPoint( 51.507222, -0.1275))
         // set up my buttons
@@ -62,21 +62,34 @@ class MainActivity : AppCompatActivity() {
             message.setText("Hello World")
             tokyo.setTypeface(Typeface.DEFAULT)
             val point: GeoPoint = GeoPoint(35.683333, 139.683333)
-            worldmap.setExpectedCenter(point)
+            worldmap.controller.animateTo(point)
+            worldmap.controller.setZoom(13.0)
 
         }
         paris.setOnClickListener{
             message.setText("Paris Calling")
+            worldmap.latitudeSpanDouble
+            //   var center = GeoPoint(0.0,0.0)
             val point: GeoPoint = GeoPoint(48.8567,2.3508)
-            worldmap.setExpectedCenter(point)
+            worldmap.controller.animateTo(point)
+            worldmap.controller.setZoom(13.0)
         }
         london.setOnClickListener {
             message.setText("London")
             tokyo.setTypeface(Typeface.DEFAULT)
             val point: GeoPoint = GeoPoint( 51.507222, -0.1275)
-            worldmap.setExpectedCenter(point)
+            worldmap.controller.animateTo(point)
+            worldmap.controller.setZoom(13.0)
+        }
+        mirror.setOnClickListener {
+            var mapCenter = worldmap.getMapCenter()
+            var point = GeoPoint(-mapCenter.latitude, (360.0 + mapCenter.longitude) % 360.0 - 180.0)
+            worldmap.controller.animateTo(point)
+            worldmap.controller.zoomOut()
 
         }
+
+     //   worldmap.controller.
     }
 
     override fun onResume() {
