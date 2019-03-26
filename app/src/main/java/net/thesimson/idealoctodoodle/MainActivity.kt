@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_main)
 
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+     //todo   navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
         worldmap.setTileSource(TileSourceFactory.MAPNIK);
         worldmap.setMultiTouchControls(true)
@@ -60,7 +60,6 @@ class MainActivity : AppCompatActivity() {
         // set up my buttons
         tokyo.setOnClickListener {
             message.setText("Hello World")
-            tokyo.setTypeface(Typeface.DEFAULT)
             val point: GeoPoint = GeoPoint(35.683333, 139.683333)
             worldmap.controller.animateTo(point)
             worldmap.controller.setZoom(13.0)
@@ -69,24 +68,37 @@ class MainActivity : AppCompatActivity() {
         paris.setOnClickListener{
             message.setText("Paris Calling")
             worldmap.latitudeSpanDouble
-            //   var center = GeoPoint(0.0,0.0)
             val point: GeoPoint = GeoPoint(48.8567,2.3508)
             worldmap.controller.animateTo(point)
             worldmap.controller.setZoom(13.0)
         }
         london.setOnClickListener {
-            message.setText("London")
-            tokyo.setTypeface(Typeface.DEFAULT)
-            val point: GeoPoint = GeoPoint( 51.507222, -0.1275)
-            worldmap.controller.animateTo(point)
-            worldmap.controller.setZoom(13.0)
+            Thread{
+                this@MainActivity.runOnUiThread {
+                    worldmap.controller.setZoom(7.0)
+                }
+                Thread.sleep(1000)
+                this@MainActivity.runOnUiThread {
+                    message.setText("London")
+                    val point: GeoPoint = GeoPoint(51.507222, -0.1275)
+                    worldmap.controller.animateTo(point)
+                }
+                Thread.sleep(2000)
+                this@MainActivity.runOnUiThread {
+                    message.setText("One")
+                    worldmap.controller.setZoom(13.0)
+                    message.setText("Two")
+                }
+
+            }.start()
+
+
         }
         mirror.setOnClickListener {
             var mapCenter = worldmap.getMapCenter()
             var point = GeoPoint(-mapCenter.latitude, (360.0 + mapCenter.longitude) % 360.0 - 180.0)
             worldmap.controller.animateTo(point)
             worldmap.controller.zoomOut()
-
         }
 
      //   worldmap.controller.
