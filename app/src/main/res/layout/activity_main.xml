@@ -9,71 +9,111 @@
         tools:context=".MainActivity">
 
 
-    <org.osmdroid.views.MapView android:id="@+id/worldmap"
-                                android:layout_width="fill_parent"
-                                android:visibility="visible" android:layout_height="fill_parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
-    />
     <LinearLayout
-            android:orientation="vertical"
+            android:id="@+id/linearLayout"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="8dp" android:id="@+id/linearLayout" app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                style="?android:attr/buttonBarStyle"
-                android:layout_height="wrap_content" tools:layout_editor_absoluteY="8dp"
-                tools:layout_editor_absoluteX="8dp">
-            <Button
-                    android:text="@string/london"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/london"
+            app:layout_constraintTop_toTopOf="parent">
 
-                    app:layout_constraintTop_toBottomOf="@+id/message"
+        <org.osmdroid.views.MapView
+                android:id="@+id/worldmap0"
+                android:layout_width="fill_parent"
+                android:layout_height="0px"
+                android:layout_weight="1"
+                android:visibility="visible">
+
+        </org.osmdroid.views.MapView>
+
+        <org.osmdroid.views.MapView
+                android:id="@+id/worldmap1"
+                android:layout_width="fill_parent"
+                android:layout_height="0px"
+                android:layout_weight="1"
+                android:visibility="visible" />
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+        <LinearLayout
+                style="?android:attr/buttonBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="8dp">
+
+            <Button
+                    android:id="@+id/london"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/london"
+
+                    app:layout_constraintBottom_toBottomOf="@+id/message0"
                     app:layout_constraintEnd_toStartOf="@+id/mirror"
-                    app:layout_constraintBottom_toBottomOf="@+id/message"/>
+                    app:layout_constraintTop_toBottomOf="@+id/message0" />
+
             <Button
-                    android:text="@string/paris"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/paris"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/paris"
+                    app:layout_constraintBottom_toBottomOf="@+id/message0"
                     app:layout_constraintEnd_toStartOf="@+id/london"
-                    app:layout_constraintTop_toBottomOf="@+id/message"
-                    app:layout_constraintBottom_toBottomOf="@+id/message"/>
+                    app:layout_constraintTop_toBottomOf="@+id/message0" />
+
             <Button
-                    android:text="@string/tokyo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/tokyo"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/paris"
-                    app:layout_constraintTop_toBottomOf="@+id/message"
-                    app:layout_constraintBottom_toBottomOf="@+id/message"/>
-            <Button
-                    android:text="@string/mirror"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@string/tokyo"
+                    app:layout_constraintBottom_toBottomOf="@+id/message0"
+                    app:layout_constraintEnd_toStartOf="@+id/paris"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/message0" />
+
+            <Button
                     android:id="@+id/mirror"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mirror"
+                    app:layout_constraintBottom_toBottomOf="@+id/message0"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/message"
-                    app:layout_constraintBottom_toBottomOf="@+id/message"/>
+                    app:layout_constraintTop_toBottomOf="@+id/message0" />
         </LinearLayout>
+
         <TextView
-                android:id="@+id/message"
+                android:id="@+id/message0"
                 android:layout_width="362dp"
                 android:layout_height="31dp"
-                android:text="@string/title_home"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"/>
+                android:text="@string/title_home"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+       <TextView
+                android:id="@+id/message1"
+                android:layout_width="362dp"
+                android:layout_height="31dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/title_home"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
     </LinearLayout>
 
 
