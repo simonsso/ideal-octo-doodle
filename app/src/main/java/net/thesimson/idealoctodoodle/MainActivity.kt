@@ -64,26 +64,18 @@ class MainActivity : AppCompatActivity() {
             //target latitude
             val lat = osmSlave.mapCenter.latitude
 
-            var targetZoom: Double = zoomlevel
-            (10 until 100).forEach {
-                val epsilon = Math.pow(10.0, -it.toDouble())
-                while (osmSlave.projection.metersToPixels(
-                        calculationDistance,
-                        lat,
-                        targetZoom
-                    ) > refdist
-                ) {
-                    targetZoom *= (1 - epsilon)
-                }
-                while (osmSlave.projection.metersToPixels(
-                        calculationDistance,
-                        lat,
-                        targetZoom
-                    ) < refdist
-                ) {
-                    targetZoom *= (1 + epsilon)
-                }
+
+
+            val y1 = osmSlave.projection.metersToPixels(calculationDistance, lat,osmSlave.zoomLevelDouble )
+            val y2 = osmSlave.projection.metersToPixels(calculationDistance, lat,osmMaster.zoomLevelDouble )
+
+            val targetZoom = if (y1 == y2 ) {
+                osmMaster.zoomLevelDouble
+            }else {
+                ((y2 - refdist) * (osmSlave.zoomLevelDouble) + (refdist - y1) * (osmMaster.zoomLevelDouble)) / (y2 - y1)
             }
+
+
             message0.text = worldmap0.projection.metersToPixels(1000f).toString()+ "Zoom "+worldmap0.zoomLevelDouble.toString()
             message1.text = worldmap1.projection.metersToPixels(1000f).toString()+" Zoom "+worldmap1.zoomLevelDouble.toString()
             osmSlave.controller.setZoom(targetZoom)
@@ -101,12 +93,15 @@ class MainActivity : AppCompatActivity() {
         worldmap1.setBuiltInZoomControls(true)
 
         worldmap1.controller.setCenter(GeoPoint( 51.507222, -0.1275))
-
+// Lulea airport 	65°32′37″N 022°07′19″E   //3500 m
+// singapore airport 01°21′33″N 103°59′22″E  // 4000 m
+        val LLA = GeoPoint( 65.543611, 22.121944 )
+        val SIN = GeoPoint (1.359167, 103.989444)
         val point: GeoPoint = GeoPoint(48.8567,2.3508)
-        worldmap0.controller.animateTo(point)
+        worldmap0.controller.animateTo(LLA)
         worldmap0.controller.setZoom(13.0)
 
-        worldmap1.controller.animateTo(point)
+        worldmap1.controller.animateTo(SIN)
         worldmap1.controller.setZoom(13.0)
 
 
