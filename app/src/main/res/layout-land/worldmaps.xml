@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/linearLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="horizontal">
+
+
+    <org.osmdroid.views.MapView
+            android:id="@+id/worldmap0"
+            android:layout_width="0px"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:visibility="visible">
+
+    </org.osmdroid.views.MapView>
+
+    <org.osmdroid.views.MapView
+            android:id="@+id/worldmap1"
+            android:layout_width="0px"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:visibility="visible" />
+
+</LinearLayout>

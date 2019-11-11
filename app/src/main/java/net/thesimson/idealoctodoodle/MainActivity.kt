@@ -6,6 +6,7 @@ import android.preference.PreferenceManager
 import android.support.design.widget.BottomNavigationView.OnNavigationItemSelectedListener
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.worldmaps.*
 import org.osmdroid.config.Configuration
 import org.osmdroid.events.MapListener
 import org.osmdroid.events.ScrollEvent
@@ -74,7 +75,6 @@ class MainActivity : AppCompatActivity() {
             }else {
                 ((y2 - refdist) * (osmSlave.zoomLevelDouble) + (refdist - y1) * (osmMaster.zoomLevelDouble)) / (y2 - y1)
             }
-
 
             message0.text = worldmap0.projection.metersToPixels(1000f).toString()+ "Zoom "+worldmap0.zoomLevelDouble.toString()
             message1.text = worldmap1.projection.metersToPixels(1000f).toString()+" Zoom "+worldmap1.zoomLevelDouble.toString()
