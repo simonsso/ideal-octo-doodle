@@ -7,6 +7,7 @@ import android.support.design.widget.BottomNavigationView.OnNavigationItemSelect
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.worldmaps.*
+import org.osmdroid.api.IGeoPoint
 import org.osmdroid.config.Configuration
 import org.osmdroid.events.MapListener
 import org.osmdroid.events.ScrollEvent
@@ -17,6 +18,10 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.views.MapView
 
 class MainActivity : AppCompatActivity() {
+    private var wm1:IGeoPoint? = null
+    private var wm0:IGeoPoint? = null
+    private var zoomlevel0:Double = 0.0
+    private var zoomlevel1:Double = 0.0
 
     private  fun buttonListener() {
 
@@ -115,6 +120,7 @@ class MainActivity : AppCompatActivity() {
             override fun onScroll(scroolEvent: ScrollEvent):Boolean{
               //  val point: GeoPoint = GeoPoint(35.683333, 139.683333)
               //  worldmap0.controller.animateTo(point)
+                copyZoom(worldmap1,worldmap0)
 
                 return true
             }
@@ -122,82 +128,97 @@ class MainActivity : AppCompatActivity() {
 
 
 /*
-        worldmap0.addMapListener(object:MapListener{
-            override fun onZoom(zoomEvent: ZoomEvent):Boolean{
-                copyZoom(worldmap0,worldmap1)
-                return true
-            }
-            override fun onScroll(scroolEvent: ScrollEvent):Boolean{
-              //  val point: GeoPoint = GeoPoint(35.683333, 139.683333)
-              //  worldmap1.controller.animateTo(point)
-
-                return true
-            }
-        })
+     worldmap0.addMapListener(object:MapListener{
+         override fun onZoom(zoomEvent: ZoomEvent):Boolean{
+//                copyZoom(worldmap0,worldmap1)
+             return true
+         }
+         override fun onScroll(scroolEvent: ScrollEvent):Boolean{
+             copyZoom(worldmap1,worldmap0)
+             return true
+         }
+     })
 */
-        /*
-        worldmap1.handler.onZoom{
-            val z:Double = worldmap1.controller.zoomLevelDouble
-            worldmap0.controller.setZoom(z)
-        }
+     /*
+     worldmap1.handler.onZoom{
+         val z:Double = worldmap1.controller.zoomLevelDouble
+         worldmap0.controller.setZoom(z)
+     }
 */
-        // set up my buttons
-        tokyo.setOnClickListener {
-            message0.setText("Hello World")
-            val point: GeoPoint = GeoPoint(35.683333, 139.683333)
-            worldmap1.controller.animateTo(point)
-            worldmap1.controller.setZoom(13.0)
+     // set up my buttons
+     tokyo.setOnClickListener {
+         message0.setText("Hello World")
+         val point: GeoPoint = GeoPoint(35.683333, 139.683333)
+         worldmap1.controller.animateTo(point)
+         worldmap1.controller.setZoom(13.0)
 
-        }
-        paris.setOnClickListener{
-            message0.setText("Paris Calling")
-            worldmap1.latitudeSpanDouble
-            val point: GeoPoint = GeoPoint(48.8567,2.3508)
-            worldmap1.controller.animateTo(point)
-            worldmap1.controller.setZoom(13.0)
-        }
-        london.setOnClickListener {
-            Thread{
-                this@MainActivity.runOnUiThread {
-                    worldmap0.controller.setZoom(7.0)
-                }
-                Thread.sleep(1000)
-                this@MainActivity.runOnUiThread {
-                    message0.setText("London")
-                    val point: GeoPoint = GeoPoint(51.507222, -0.1275)
-                    worldmap0.controller.animateTo(point)
-                }
-                Thread.sleep(2000)
-                this@MainActivity.runOnUiThread {
-                    message0.setText("One")
-                    worldmap0.controller.setZoom(13.0)
-                    message0.setText("Two")
-                }
+     }
+     paris.setOnClickListener{
+         message0.setText("Paris Calling")
+         worldmap1.latitudeSpanDouble
+         val point: GeoPoint = GeoPoint(48.8567,2.3508)
+         worldmap1.controller.animateTo(point)
+         worldmap1.controller.setZoom(13.0)
+     }
+     london.setOnClickListener {
+         Thread{
+             this@MainActivity.runOnUiThread {
+                 worldmap0.controller.setZoom(7.0)
+             }
+             Thread.sleep(1000)
+             this@MainActivity.runOnUiThread {
+                 message0.setText("London")
+                 val point: GeoPoint = GeoPoint(51.507222, -0.1275)
+                 worldmap0.controller.animateTo(point)
+             }
+             Thread.sleep(2000)
+             this@MainActivity.runOnUiThread {
+                 message0.setText("One")
+                 worldmap0.controller.setZoom(13.0)
+                 message0.setText("Two")
+             }
 
-            }.start()
+         }.start()
 
 
-        }
-        mirror.setOnClickListener {
-            var mapCenter = worldmap1.getMapCenter()
-            var point = GeoPoint(-mapCenter.latitude, (360.0 + mapCenter.longitude) % 360.0 - 180.0)
-            worldmap1.controller.animateTo(point)
-            worldmap1.controller.zoomOut()
-        }
+     }
+     mirror.setOnClickListener {
+         var mapCenter = worldmap1.getMapCenter()
+         var point = GeoPoint(-mapCenter.latitude, (360.0 + mapCenter.longitude) % 360.0 - 180.0)
+         worldmap1.controller.animateTo(point)
+         worldmap1.controller.zoomOut()
+     }
 
-     //   worldmap.controller.
-    }
+  //   worldmap.controller.
+ }
 
-    override fun onResume() {
-        super.onResume()
-        worldmap1.onResume()
-        worldmap0.onResume()
-    }
+ override fun onResume() {
+     super.onResume()
+     worldmap1.onResume()
+     worldmap0.onResume()
+     if(wm0 != null) {
+         worldmap0.controller.setCenter(wm0)
+         worldmap0.controller.setZoom(zoomlevel0)
+     }
+     if(wm1 != null) {
+         worldmap1.controller.setCenter(wm1)
+         worldmap1.controller.setZoom(zoomlevel1)
+     }
 
-    override fun onPause() {
-        super.onPause()
-        worldmap0.onPause()
-        worldmap1.onPause()
-    }
+
+ }
+
+ override fun onPause() {
+     super.onPause()
+     worldmap0.onPause()
+     worldmap1.onPause()
+
+     wm0 = worldmap0.mapCenter
+     zoomlevel0 = worldmap0.zoomLevelDouble
+     wm1 = worldmap1.mapCenter
+     zoomlevel1 =worldmap1.zoomLevelDouble
+
+
+ }
 }
 
