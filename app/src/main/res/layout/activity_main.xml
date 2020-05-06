@@ -5,8 +5,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        android:layout_height="match_parent">
 
 
     <include
@@ -24,52 +23,10 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-        <LinearLayout
-                style="?android:attr/buttonBarStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                tools:layout_editor_absoluteX="8dp"
-                tools:layout_editor_absoluteY="8dp">
-
-            <Button
-                    android:id="@+id/london"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/london"
-
-                    app:layout_constraintBottom_toBottomOf="@+id/message0"
-                    app:layout_constraintEnd_toStartOf="@+id/mirror"
-                    app:layout_constraintTop_toBottomOf="@+id/message0" />
-
-            <Button
-                    android:id="@+id/paris"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/paris"
-                    app:layout_constraintBottom_toBottomOf="@+id/message0"
-                    app:layout_constraintEnd_toStartOf="@+id/london"
-                    app:layout_constraintTop_toBottomOf="@+id/message0" />
-
-            <Button
-                    android:id="@+id/tokyo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tokyo"
-                    app:layout_constraintBottom_toBottomOf="@+id/message0"
-                    app:layout_constraintEnd_toStartOf="@+id/paris"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/message0" />
-
-            <Button
-                    android:id="@+id/mirror"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/mirror"
-                    app:layout_constraintBottom_toBottomOf="@+id/message0"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/message0" />
-        </LinearLayout>
+        <include
+                layout="@layout/quicklocations"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
         <TextView
                 android:id="@+id/message0"

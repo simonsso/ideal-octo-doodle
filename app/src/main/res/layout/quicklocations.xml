@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        style="?android:attr/buttonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+    <Button
+            android:id="@+id/london"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/london"
+
+            app:layout_constraintBottom_toBottomOf="@+id/message0"
+            app:layout_constraintEnd_toStartOf="@+id/mirror"
+            app:layout_constraintTop_toBottomOf="@+id/message0" />
+
+    <Button
+            android:id="@+id/paris"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/paris"
+            app:layout_constraintBottom_toBottomOf="@+id/message0"
+            app:layout_constraintEnd_toStartOf="@+id/london"
+            app:layout_constraintTop_toBottomOf="@+id/message0" />
+
+    <Button
+            android:id="@+id/tokyo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tokyo"
+            app:layout_constraintBottom_toBottomOf="@+id/message0"
+            app:layout_constraintEnd_toStartOf="@+id/paris"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/message0" />
+
+    <Button
+            android:id="@+id/mirror"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mirror"
+            app:layout_constraintBottom_toBottomOf="@+id/message0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/message0" />
+</LinearLayout>

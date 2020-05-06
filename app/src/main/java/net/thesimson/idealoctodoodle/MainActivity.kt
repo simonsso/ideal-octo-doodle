@@ -6,6 +6,11 @@ import android.preference.PreferenceManager
 import android.support.design.widget.BottomNavigationView.OnNavigationItemSelectedListener
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.quicklocations.*
+import kotlinx.android.synthetic.main.quicklocations.view.*
+import kotlinx.android.synthetic.main.quicklocations.view.london
+import kotlinx.android.synthetic.main.quicklocations.view.mirror
+import kotlinx.android.synthetic.main.quicklocations.view.paris
 import kotlinx.android.synthetic.main.worldmaps.*
 import org.osmdroid.api.IGeoPoint
 import org.osmdroid.config.Configuration
@@ -30,18 +35,18 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.navigation_home -> {
                 message0.setText(R.string.title_home)
-                tokyo.setTypeface(Typeface.DEFAULT_BOLD)
+//                tokyo.setTypeface(Typeface.DEFAULT_BOLD)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_dashboard -> {
                 message0.setText(R.string.title_dashboard)
-                tokyo.setTypeface(Typeface.MONOSPACE)
+//                tokyo.setTypeface(Typeface.MONOSPACE)
 
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_notifications -> {
                 message0.setText(R.string.title_notifications)
-                tokyo.setTypeface(Typeface.SANS_SERIF)
+//                tokyo.setTypeface(Typeface.SANS_SERIF)
                 return@OnNavigationItemSelectedListener true
             }
 
@@ -161,25 +166,27 @@ class MainActivity : AppCompatActivity() {
          worldmap1.controller.setZoom(13.0)
      }
      london.setOnClickListener {
-         Thread{
-             this@MainActivity.runOnUiThread {
-                 worldmap0.controller.setZoom(7.0)
-             }
-             Thread.sleep(1000)
-             this@MainActivity.runOnUiThread {
-                 message0.setText("London")
-                 val point: GeoPoint = GeoPoint(51.507222, -0.1275)
-                 worldmap0.controller.animateTo(point)
-             }
-             Thread.sleep(2000)
-             this@MainActivity.runOnUiThread {
-                 message0.setText("One")
-                 worldmap0.controller.setZoom(13.0)
-                 message0.setText("Two")
-             }
+//         Thread{
+//             this@MainActivity.runOnUiThread {
+//                 worldmap0.controller.setZoom(7.0)
+//             }
+//             Thread.sleep(1000)
+//             this@MainActivity.runOnUiThread {
+//                 message0.setText("London")
+//                 val point: GeoPoint = GeoPoint(51.507222, -0.1275)
+//                 worldmap0.controller.animateTo(point)
+//             }
+//             Thread.sleep(2000)
+//             this@MainActivity.runOnUiThread {
+//                 message0.setText("One")
+//                 worldmap0.controller.setZoom(13.0)
+//                 message0.setText("Two")
+//             }
+//
+//         }.start()
+     //Goto    55.995309, 13.441772
 
-         }.start()
-
+         worldmap0.controller.animateTo(GeoPoint(55.995309, 13.441772))
 
      }
      mirror.setOnClickListener {
