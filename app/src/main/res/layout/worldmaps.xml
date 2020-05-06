@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/linearLayout"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
@@ -8,20 +10,33 @@
             android:orientation="vertical">
 
 
-    <org.osmdroid.views.MapView
+<!--        <include-->
+<!--                layout="@layout/quicklocations"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content" />-->
+
+        <org.osmdroid.views.MapView
             android:id="@+id/worldmap0"
             android:layout_width="fill_parent"
             android:layout_height="0px"
             android:layout_weight="1"
             android:visibility="visible">
 
-    </org.osmdroid.views.MapView>
 
-    <org.osmdroid.views.MapView
+        </org.osmdroid.views.MapView>
+
+        <org.osmdroid.views.MapView
             android:id="@+id/worldmap1"
             android:layout_width="fill_parent"
             android:layout_height="0px"
             android:layout_weight="1"
-            android:visibility="visible" />
+            android:visibility="visible" >
 
+
+        </org.osmdroid.views.MapView>
+
+<!--    <include-->
+<!--            layout="@layout/quicklocations"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content" />-->
 </LinearLayout>
