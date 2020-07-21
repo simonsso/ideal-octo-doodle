@@ -17,10 +17,10 @@
 
     </org.osmdroid.views.MapView>
 
-<!--    <include-->
-<!--            layout="@layout/quicklocations"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content" />-->
+    <include
+            layout="@layout/quicklocations"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
     <org.osmdroid.views.MapView
             android:id="@+id/worldmap1"

@@ -10,32 +10,44 @@
             android:orientation="vertical">
 
 
-<!--        <include-->
-<!--                layout="@layout/quicklocations"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content" />-->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+            <include
+                    layout="@layout/quicklocations"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            <org.osmdroid.views.MapView
+                    android:id="@+id/worldmap0"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0px"
+                    android:layout_weight="1"
+                    android:visibility="visible">
+
+
+            </org.osmdroid.views.MapView>
+        </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
         <org.osmdroid.views.MapView
-            android:id="@+id/worldmap0"
-            android:layout_width="fill_parent"
-            android:layout_height="0px"
-            android:layout_weight="1"
-            android:visibility="visible">
+                android:id="@+id/worldmap1"
+                android:layout_width="fill_parent"
+                android:layout_height="0px"
+                android:layout_weight="1"
+                android:visibility="visible">
 
 
         </org.osmdroid.views.MapView>
+    </LinearLayout>
 
-        <org.osmdroid.views.MapView
-            android:id="@+id/worldmap1"
-            android:layout_width="fill_parent"
-            android:layout_height="0px"
-            android:layout_weight="1"
-            android:visibility="visible" >
-
-
-        </org.osmdroid.views.MapView>
-
-<!--    <include-->
+    <!--    <include-->
 <!--            layout="@layout/quicklocations"-->
 <!--            android:layout_width="match_parent"-->
 <!--            android:layout_height="wrap_content" />-->
