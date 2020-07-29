@@ -3,6 +3,7 @@ package net.thesimson.idealoctodoodle
 import android.graphics.Typeface
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.support.annotation.UiThread
 import android.support.design.widget.BottomNavigationView.OnNavigationItemSelectedListener
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -27,6 +28,13 @@ class MainActivity : AppCompatActivity() {
     private var wm0:IGeoPoint? = null
     private var zoomlevel0:Double = 0.0
     private var zoomlevel1:Double = 0.0
+    private  var zoomlock = -1
+
+    // Lulea airport 	65°32′37″N 022°07′19″E   //3500 m
+    // singapore airport 01°21′33″N 103°59′22″E  // 4000 m
+    val LLA = GeoPoint( 65.543611, 22.121944 )
+    val SIN = GeoPoint (1.359167, 103.989444)
+    val point: GeoPoint = GeoPoint(48.8567,2.3508)
 
     private  fun buttonListener() {
 
@@ -60,22 +68,17 @@ class MainActivity : AppCompatActivity() {
         var ctx = getApplicationContext()
 
         Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
-
         setContentView(R.layout.activity_main)
 
      //todo   navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
-
-
         fun copyZoom(osmMaster:MapView, osmSlave:MapView) {
             val zoomlevel = osmMaster.zoomLevelDouble
-            val calculationDistance: Float = 1000000f
+            val calculationDistance: Float = 10000.00f
             val refdist = osmMaster.projection.metersToPixels(calculationDistance)
 
             //target latitude
             val lat = osmSlave.mapCenter.latitude
-
-
 
             val y1 = osmSlave.projection.metersToPixels(calculationDistance, lat,osmSlave.zoomLevelDouble )
             val y2 = osmSlave.projection.metersToPixels(calculationDistance, lat,osmMaster.zoomLevelDouble )
@@ -86,70 +89,72 @@ class MainActivity : AppCompatActivity() {
                 ((y2 - refdist) * (osmSlave.zoomLevelDouble) + (refdist - y1) * (osmMaster.zoomLevelDouble)) / (y2 - y1)
             }
 
-            message0.text = worldmap0.projection.metersToPixels(1000f).toString()+ "Zoom "+worldmap0.zoomLevelDouble.toString()
-            message1.text = worldmap1.projection.metersToPixels(1000f).toString()+" Zoom "+worldmap1.zoomLevelDouble.toString()
+            message0.text =
+            //            worldmap0.projection.metersToPixels(1000f).toString()+
+            //"Zoom "+worldmap0.zoomLevelDouble.toString()+
+                worldmap0.mapCenter.toString()
+            message1.text =
+            // worldmap1.projection.metersToPixels(1000f).toString()+
+            //" Zoom "+worldmap1.zoomLevelDouble.toString()+
+                worldmap1.mapCenter.toString()
             osmSlave.controller.setZoom(targetZoom)
         }
 
-
         worldmap0.setTileSource(TileSourceFactory.MAPNIK);
         worldmap0.setMultiTouchControls(true)
-        worldmap0.setBuiltInZoomControls(true)
+        worldmap0.setBuiltInZoomControls(false)
 
-        worldmap0.controller.setCenter(GeoPoint( 51.507222, -0.1275))
 
         worldmap1.setTileSource(TileSourceFactory.MAPNIK);
         worldmap1.setMultiTouchControls(true)
-        worldmap1.setBuiltInZoomControls(true)
+        worldmap1.setBuiltInZoomControls(false)
 
-        worldmap1.controller.setCenter(GeoPoint( 51.507222, -0.1275))
-// Lulea airport 	65°32′37″N 022°07′19″E   //3500 m
-// singapore airport 01°21′33″N 103°59′22″E  // 4000 m
-        val LLA = GeoPoint( 65.543611, 22.121944 )
-        val SIN = GeoPoint (1.359167, 103.989444)
-        val point: GeoPoint = GeoPoint(48.8567,2.3508)
-        worldmap0.controller.animateTo(LLA)
+        worldmap0.controller.setCenter(LLA)
+        worldmap1.controller.setCenter(SIN)
+
+        zoomlock = 0
         worldmap0.controller.setZoom(13.0)
 
-        worldmap1.controller.animateTo(SIN)
-        worldmap1.controller.setZoom(13.0)
-
-
         worldmap1.addMapListener(object:MapListener{
-
+            @UiThread
             override fun onZoom(event: ZoomEvent?): Boolean {
-                copyZoom(worldmap1,worldmap0)
-
+                if (zoomlock == 0) {
+                    zoomlock = 1
+                    copyZoom(worldmap1,worldmap0)
+                    zoomlock = 0
+                }
                 return true
             }
+            @UiThread
             override fun onScroll(scroolEvent: ScrollEvent):Boolean{
-              //  val point: GeoPoint = GeoPoint(35.683333, 139.683333)
-              //  worldmap0.controller.animateTo(point)
-                copyZoom(worldmap1,worldmap0)
-
+                if (zoomlock == 0) {
+                    zoomlock = 1
+                    copyZoom(worldmap1,worldmap0)
+                    zoomlock = 0
+                }
                 return true
             }
         })
 
-
-/*
      worldmap0.addMapListener(object:MapListener{
          override fun onZoom(zoomEvent: ZoomEvent):Boolean{
-//                copyZoom(worldmap0,worldmap1)
+             if (zoomlock == 0) {
+                 zoomlock = 2
+                 copyZoom(worldmap0,worldmap1)
+                 zoomlock = 0
+             }
              return true
          }
          override fun onScroll(scroolEvent: ScrollEvent):Boolean{
-             copyZoom(worldmap1,worldmap0)
+             if (zoomlock == 0) {
+                 zoomlock = 2
+                 copyZoom(worldmap0,worldmap1)
+                 zoomlock = 0
+             }
              return true
          }
      })
-*/
-     /*
-     worldmap1.handler.onZoom{
-         val z:Double = worldmap1.controller.zoomLevelDouble
-         worldmap0.controller.setZoom(z)
-     }
-*/
+
      // set up my buttons
      tokyo.setOnClickListener {
          message0.setText("Hello World")
@@ -211,8 +216,6 @@ class MainActivity : AppCompatActivity() {
          worldmap1.controller.setCenter(wm1)
          worldmap1.controller.setZoom(zoomlevel1)
      }
-
-
  }
 
  override fun onPause() {
@@ -224,8 +227,6 @@ class MainActivity : AppCompatActivity() {
      zoomlevel0 = worldmap0.zoomLevelDouble
      wm1 = worldmap1.mapCenter
      zoomlevel1 =worldmap1.zoomLevelDouble
-
-
  }
 }
 
