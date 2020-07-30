@@ -36,6 +36,9 @@ class MainActivity : AppCompatActivity() {
     val SIN = GeoPoint (1.359167, 103.989444)
     val point: GeoPoint = GeoPoint(48.8567,2.3508)
 
+    private  var map0center:IGeoPoint = LLA
+    private  var map1center:IGeoPoint = SIN
+
     private  fun buttonListener() {
 
     }
@@ -89,14 +92,14 @@ class MainActivity : AppCompatActivity() {
                 ((y2 - refdist) * (osmSlave.zoomLevelDouble) + (refdist - y1) * (osmMaster.zoomLevelDouble)) / (y2 - y1)
             }
 
-            message0.text =
-            //            worldmap0.projection.metersToPixels(1000f).toString()+
-            //"Zoom "+worldmap0.zoomLevelDouble.toString()+
-                worldmap0.mapCenter.toString()
-            message1.text =
-            // worldmap1.projection.metersToPixels(1000f).toString()+
-            //" Zoom "+worldmap1.zoomLevelDouble.toString()+
-                worldmap1.mapCenter.toString()
+//            message0.text =
+//            //            worldmap0.projection.metersToPixels(1000f).toString()+
+//            //"Zoom "+worldmap0.zoomLevelDouble.toString()+
+//                worldmap0.mapCenter.toString()
+//            message1.text =
+//            // worldmap1.projection.metersToPixels(1000f).toString()+
+//            //" Zoom "+worldmap1.zoomLevelDouble.toString()+
+//                worldmap1.mapCenter.toString()
             osmSlave.controller.setZoom(targetZoom)
         }
 
@@ -109,18 +112,21 @@ class MainActivity : AppCompatActivity() {
         worldmap1.setMultiTouchControls(true)
         worldmap1.setBuiltInZoomControls(false)
 
-        worldmap0.controller.setCenter(LLA)
-        worldmap1.controller.setCenter(SIN)
+
+        worldmap0.controller.setCenter(map0center)
+        worldmap1.controller.setCenter(map1center)
 
         zoomlock = 0
         worldmap0.controller.setZoom(13.0)
-
+//        worldmap1.controller.setZoom(13.0)
+//
         worldmap1.addMapListener(object:MapListener{
             @UiThread
             override fun onZoom(event: ZoomEvent?): Boolean {
                 if (zoomlock == 0) {
                     zoomlock = 1
                     copyZoom(worldmap1,worldmap0)
+                    worldmap0.controller.setCenter(map0center)
                     zoomlock = 0
                 }
                 return true
@@ -129,9 +135,13 @@ class MainActivity : AppCompatActivity() {
             override fun onScroll(scroolEvent: ScrollEvent):Boolean{
                 if (zoomlock == 0) {
                     zoomlock = 1
+                    map1center = worldmap1.getMapCenter()
                     copyZoom(worldmap1,worldmap0)
+                    message0.text = "A " + worldmap0.mapCenter.toString()
+                    message1.text = "A "+ worldmap1.mapCenter.toString()
                     zoomlock = 0
                 }
+
                 return true
             }
         })
@@ -141,6 +151,7 @@ class MainActivity : AppCompatActivity() {
              if (zoomlock == 0) {
                  zoomlock = 2
                  copyZoom(worldmap0,worldmap1)
+                 worldmap1.controller.setCenter(map1center)
                  zoomlock = 0
              }
              return true
@@ -148,9 +159,13 @@ class MainActivity : AppCompatActivity() {
          override fun onScroll(scroolEvent: ScrollEvent):Boolean{
              if (zoomlock == 0) {
                  zoomlock = 2
+                 map0center = worldmap0.getMapCenter()
                  copyZoom(worldmap0,worldmap1)
+                 message0.text = "B " + worldmap0.mapCenter.toString()
+                 message1.text = "B "+ worldmap1.mapCenter.toString()
                  zoomlock = 0
              }
+
              return true
          }
      })
@@ -216,6 +231,8 @@ class MainActivity : AppCompatActivity() {
          worldmap1.controller.setCenter(wm1)
          worldmap1.controller.setZoom(zoomlevel1)
      }
+
+
  }
 
  override fun onPause() {
@@ -227,6 +244,8 @@ class MainActivity : AppCompatActivity() {
      zoomlevel0 = worldmap0.zoomLevelDouble
      wm1 = worldmap1.mapCenter
      zoomlevel1 =worldmap1.zoomLevelDouble
+
+
  }
 }
 
