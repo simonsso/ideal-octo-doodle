@@ -1,6 +1,5 @@
 package net.thesimson.idealoctodoodle
 
-import android.graphics.Typeface
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.support.annotation.UiThread
@@ -8,10 +7,6 @@ import android.support.design.widget.BottomNavigationView.OnNavigationItemSelect
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.quicklocations.*
-import kotlinx.android.synthetic.main.quicklocations.view.*
-import kotlinx.android.synthetic.main.quicklocations.view.london
-import kotlinx.android.synthetic.main.quicklocations.view.mirror
-import kotlinx.android.synthetic.main.quicklocations.view.paris
 import kotlinx.android.synthetic.main.worldmaps.*
 import org.osmdroid.api.IGeoPoint
 import org.osmdroid.config.Configuration
@@ -30,10 +25,14 @@ class MainActivity : AppCompatActivity() {
     private var zoomlevel1:Double = 0.0
     private  var zoomlock = -1
 
+    // Starting poing two airport with simular runwaylength
+    // one close to the equator and one close to the artic circle
+    // to compare zoom level
+
     // Lulea airport 	65°32′37″N 022°07′19″E   //3500 m
+    val LLA:IGeoPoint = GeoPoint( 65.543611, 22.121944 )
     // singapore airport 01°21′33″N 103°59′22″E  // 4000 m
-    val LLA = GeoPoint( 65.543611, 22.121944 )
-    val SIN = GeoPoint (1.359167, 103.989444)
+    val SIN:IGeoPoint = GeoPoint (1.359167, 103.989444)
     val point: GeoPoint = GeoPoint(48.8567,2.3508)
 
     private  var map0center:IGeoPoint = LLA
@@ -87,19 +86,10 @@ class MainActivity : AppCompatActivity() {
             val y2 = osmSlave.projection.metersToPixels(calculationDistance, lat,osmMaster.zoomLevelDouble )
 
             val targetZoom = if (y1 == y2 ) {
-                osmMaster.zoomLevelDouble
+                zoomlevel
             }else {
                 ((y2 - refdist) * (osmSlave.zoomLevelDouble) + (refdist - y1) * (osmMaster.zoomLevelDouble)) / (y2 - y1)
             }
-
-//            message0.text =
-//            //            worldmap0.projection.metersToPixels(1000f).toString()+
-//            //"Zoom "+worldmap0.zoomLevelDouble.toString()+
-//                worldmap0.mapCenter.toString()
-//            message1.text =
-//            // worldmap1.projection.metersToPixels(1000f).toString()+
-//            //" Zoom "+worldmap1.zoomLevelDouble.toString()+
-//                worldmap1.mapCenter.toString()
             osmSlave.controller.setZoom(targetZoom)
         }
 
@@ -165,58 +155,31 @@ class MainActivity : AppCompatActivity() {
                  message1.text = "B "+ worldmap1.mapCenter.toString()
                  zoomlock = 0
              }
-
              return true
          }
      })
 
      // set up my buttons
      tokyo.setOnClickListener {
-         message0.setText("Hello World")
-         val point: GeoPoint = GeoPoint(35.683333, 139.683333)
-         worldmap1.controller.animateTo(point)
+         map1center = GeoPoint(35.683333, 139.683333)
+         worldmap1.controller.animateTo(map1center)
          worldmap1.controller.setZoom(13.0)
 
      }
      paris.setOnClickListener{
-         message0.setText("Paris Calling")
-         worldmap1.latitudeSpanDouble
-         val point: GeoPoint = GeoPoint(48.8567,2.3508)
-         worldmap1.controller.animateTo(point)
+         map1center = GeoPoint(48.8567,2.3508)
+         worldmap1.controller.animateTo(map1center)
          worldmap1.controller.setZoom(13.0)
      }
      london.setOnClickListener {
-//         Thread{
-//             this@MainActivity.runOnUiThread {
-//                 worldmap0.controller.setZoom(7.0)
-//             }
-//             Thread.sleep(1000)
-//             this@MainActivity.runOnUiThread {
-//                 message0.setText("London")
-//                 val point: GeoPoint = GeoPoint(51.507222, -0.1275)
-//                 worldmap0.controller.animateTo(point)
-//             }
-//             Thread.sleep(2000)
-//             this@MainActivity.runOnUiThread {
-//                 message0.setText("One")
-//                 worldmap0.controller.setZoom(13.0)
-//                 message0.setText("Two")
-//             }
-//
-//         }.start()
-     //Goto    55.995309, 13.441772
-
-         worldmap0.controller.animateTo(GeoPoint(55.995309, 13.441772))
-
+         map1center = GeoPoint(51.507222, -0.1275)
+         worldmap1.controller.animateTo(map1center)
+         worldmap1.controller.setZoom(13.0)
      }
-     mirror.setOnClickListener {
-         var mapCenter = worldmap1.getMapCenter()
-         var point = GeoPoint(-mapCenter.latitude, (360.0 + mapCenter.longitude) % 360.0 - 180.0)
-         worldmap1.controller.animateTo(point)
-         worldmap1.controller.zoomOut()
+     skane.setOnClickListener {
+         map1center=GeoPoint(55.995309, 13.441772)
+         worldmap1.controller.animateTo(map1center)
      }
-
-  //   worldmap.controller.
  }
 
  override fun onResume() {
@@ -231,8 +194,6 @@ class MainActivity : AppCompatActivity() {
          worldmap1.controller.setCenter(wm1)
          worldmap1.controller.setZoom(zoomlevel1)
      }
-
-
  }
 
  override fun onPause() {

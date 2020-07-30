@@ -1,3 +1,6 @@
 # ideal-octo-doodle
+Mercator projection causes length to be distorted propositional to the distance from equator.
+The app shows two open street map views, and adjusts the zoom level to compensate for this.
 
-Android app project in kotlin. Playing around with design elements and open-street-map api.
+## Known limitations
+A map zoomed out to a continental level contains too much distortion in itself to be accurate, adjusting the zoomlevel cannot solve this.

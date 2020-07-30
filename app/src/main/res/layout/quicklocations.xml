@@ -6,12 +6,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-
     <Button
             android:id="@+id/london"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/london"
+            style="?android:attr/buttonBarButtonStyle"
 
             app:layout_constraintBottom_toBottomOf="@+id/message0"
             app:layout_constraintEnd_toStartOf="@+id/mirror"
@@ -21,6 +21,7 @@
             android:id="@+id/paris"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="?android:attr/buttonBarButtonStyle"
             android:text="@string/paris"
             app:layout_constraintBottom_toBottomOf="@+id/message0"
             app:layout_constraintEnd_toStartOf="@+id/london"
@@ -28,6 +29,7 @@
 
     <Button
             android:id="@+id/tokyo"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tokyo"
@@ -37,10 +39,11 @@
             app:layout_constraintTop_toBottomOf="@+id/message0" />
 
     <Button
-            android:id="@+id/mirror"
+            style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/skane"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/mirror"
+            android:text="@string/skane"
             app:layout_constraintBottom_toBottomOf="@+id/message0"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/message0" />
