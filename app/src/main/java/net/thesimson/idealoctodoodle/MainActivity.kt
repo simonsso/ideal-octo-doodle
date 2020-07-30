@@ -161,24 +161,48 @@ class MainActivity : AppCompatActivity() {
 
      // set up my buttons
      tokyo.setOnClickListener {
-         map1center = GeoPoint(35.683333, 139.683333)
-         worldmap1.controller.animateTo(map1center)
-         worldmap1.controller.setZoom(13.0)
-
+         if (toggleButton.isChecked){
+             map0center = GeoPoint(35.683333, 139.683333)
+             worldmap0.controller.animateTo(map0center)
+             worldmap0.controller.setZoom(13.0)
+         }else{
+             map1center = GeoPoint(35.683333, 139.683333)
+             worldmap1.controller.animateTo(map1center)
+             worldmap1.controller.setZoom(13.0)
+         }
      }
      paris.setOnClickListener{
-         map1center = GeoPoint(48.8567,2.3508)
-         worldmap1.controller.animateTo(map1center)
-         worldmap1.controller.setZoom(13.0)
+         if(toggleButton.isChecked()){
+             map0center = GeoPoint(48.8567,2.3508)
+             worldmap0.controller.animateTo(map0center)
+             worldmap0.controller.setZoom(13.0)
+         }else{
+             map1center = GeoPoint(48.8567,2.3508)
+             worldmap1.controller.animateTo(map1center)
+             worldmap1.controller.setZoom(13.0)
+         }
      }
      london.setOnClickListener {
-         map1center = GeoPoint(51.507222, -0.1275)
-         worldmap1.controller.animateTo(map1center)
-         worldmap1.controller.setZoom(13.0)
+         if(toggleButton.isChecked()){
+             map0center = GeoPoint(51.507222, -0.1275)
+             worldmap0.controller.animateTo(map0center)
+             worldmap0.controller.setZoom(13.0)
+         }else{
+             map1center = GeoPoint(51.507222, -0.1275)
+             worldmap1.controller.animateTo(map1center)
+             worldmap1.controller.setZoom(13.0)
+         }
      }
      skane.setOnClickListener {
-         map1center=GeoPoint(55.995309, 13.441772)
-         worldmap1.controller.animateTo(map1center)
+         if(toggleButton.isChecked()){
+            map0center=GeoPoint(55.995309, 13.441772)
+            worldmap0.controller.animateTo(map0center)
+            worldmap0.controller.setZoom(13.0)
+         }else{
+             map1center=GeoPoint(55.995309, 13.441772)
+             worldmap1.controller.animateTo(map1center)
+             worldmap1.controller.setZoom(13.0)
+         }
      }
  }
 
